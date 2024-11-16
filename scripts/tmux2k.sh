@@ -67,7 +67,7 @@ set_theme() {
   case $theme in
   "catppuccin")
     bg_main=$(get_tmux_option "@tmux2k-bg-main" '#1e1e2e')
-    bg_alt=$(get_tmux_option "@tmux2k-bg-alt" '#313244')
+    bg_alt=$(get_tmux_option "@tmux2k-bg-alt" '#222335' )
     black=$(get_tmux_option "@tmux2k-black" '#11111b')
     white=$(get_tmux_option "@tmux2k-white" '#cdd6f4')
     red=$(get_tmux_option "@tmux2k-red" '#f38ba8')
@@ -164,7 +164,7 @@ set_theme() {
       ["bandwidth"]="text purple"
       ["ping"]="text purple"
       ["weather"]="text yellow"
-      ["time"]="text light_blue"
+      ["time"]="text light_purple"
       ["pomodoro"]="text red"
       ["window"]="blue bg_main"
     )
@@ -196,9 +196,8 @@ start_icon() {
   esac
 
   first_plugin=${lplugins[0]}
-  IFS=' ' read -r -a first_colors <<<"$(get_plugin_colors "$first_plugin")"
-  tmux set-option -g status-left \
-    "#[fg=${!first_colors[0]},bg=${!first_colors[1]}]#{?client_prefix,#[fg=${light_yellow},}${wl_sep}#[bg=${!first_colors[0]},fg=${!first_colors[1]}]#{?client_prefix,#[bg=${light_yellow},}${start_icon}#[fg=${!first_colors[0]},bg=${!first_colors[1]}]#{?client_prefix,#[fg=${light_yellow},}${wr_sep}"
+  IFS=' ' read -r -a first_colors <<<"$(get_plugin_colors "start_icon")"
+  tmux set-option -g status-left "#[bg=${!first_colors[0]},fg=${!first_colors[1]}]#{?client_prefix,#[bg=${light_yellow},} ${start_icon} "
 }
 
 status_bar() {
@@ -258,17 +257,17 @@ window_list() {
 
   if $show_powerline; then
     tmux set-window-option -g window-status-current-format \
-      "#[fg=${wfg},bg=${wbg}]${wl_sep}#[bg=${wfg}]${current_flags}#[fg=${wbg}]${spacer}#I#[fg=${wfg},bg=${wbg}]${wr_sep}#[fg=${wbg},bg=${wfg}]#W${spacer}#[fg=${wfg},bg=${wbg}]${wr_sep}"
+      "#[fg=${wfg},bg=${wbg}]${wl_sep}#[bg=${wfg}]${current_flags}#[fg=${wbg}]${spacer}#W${spacer}#[fg=${wfg},bg=${wbg}]${wr_sep}"
     tmux set-window-option -g window-status-format \
-      "#[fg=${bg_alt},bg=${wbg}]${wl_sep}#[bg=${bg_alt}]${flags}#[fg=${white}]${spacer}#I:#W${spacer}#[fg=${bg_alt},bg=${wbg}]${wr_sep}"
+      "#[fg=${bg_alt},bg=${wbg}]${wl_sep}#[bg=${bg_alt}]${flags}#[fg=${white}]${spacer}#W${spacer}#[fg=${bg_alt},bg=${wbg}]${wr_sep}"
   else
-    tmux set-window-option -g window-status-current-format "#[fg=${wbg},bg=${wfg}] #I:#W${spacer}${current_flags} "
-    tmux set-window-option -g window-status-format "#[fg=${white},bg=${bg_alt}] #I:#W${spacer}${flags} "
+    tmux set-window-option -g window-status-current-format "#[fg=${wbg},bg=${wfg}]#W${spacer}${current_flags} "
+    tmux set-window-option -g window-status-format "#[fg=${white},bg=${bg_alt}]#W${spacer}${flags} "
   fi
 
   if $icons_only; then
-    tmux set-window-option -g window-status-current-format "#[fg=${wbg},bg=${wfg}]${spacer}#I:#W${spacer}"
-    tmux set-window-option -g window-status-format "#[fg=${white},bg=${wfg}]${spacer}#I:#W${spacer}"
+    tmux set-window-option -g window-status-current-format "#[fg=${wbg},bg=${wfg}]${spacer}#W${spacer}"
+    tmux set-window-option -g window-status-format "#[fg=${white},bg=${wfg}]${spacer}#W${spacer}"
   fi
 }
 
