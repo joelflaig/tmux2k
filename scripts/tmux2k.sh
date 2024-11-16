@@ -154,6 +154,7 @@ set_theme() {
     show_powerline=false
     text=$bg_main
     plugin_colors=(
+      ["start_icon"]="text green"
       ["git"]="text green"
       ["cpu"]="text light_green"
       ["cwd"]="text blue"
@@ -164,9 +165,9 @@ set_theme() {
       ["bandwidth"]="text purple"
       ["ping"]="text purple"
       ["weather"]="text yellow"
-      ["time"]="text light_blue"
+      ["time"]="text light_purple"
       ["pomodoro"]="text red"
-      ["window"]="blue bg_main"
+      ["window"]="yellow bg_main"
     )
   fi
 }
@@ -196,7 +197,7 @@ start_icon() {
   esac
 
   first_plugin=${lplugins[0]}
-  IFS=' ' read -r -a first_colors <<<"$(get_plugin_colors "$first_plugin")"
+  IFS=' ' read -r -a first_colors <<<"$(get_plugin_colors "start_icon")"
   tmux set-option -g status-left \
     "#[fg=${!first_colors[0]},bg=${!first_colors[1]}]#{?client_prefix,#[fg=${light_yellow},}${wl_sep}#[bg=${!first_colors[0]},fg=${!first_colors[1]}]#{?client_prefix,#[bg=${light_yellow},}${start_icon}#[fg=${!first_colors[0]},bg=${!first_colors[1]}]#{?client_prefix,#[fg=${light_yellow},}${wr_sep}"
 }
