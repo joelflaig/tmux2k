@@ -258,6 +258,7 @@ window_list() {
 
   if $show_powerline; then
     tmux set-window-option -g window-status-current-format \
+
       "#[fg=${wfg},bg=${wbg}]${wl_sep}#[bg=${wfg}]${current_flags}#[fg=${wbg}]${spacer}#I  #W${spacer}#[fg=${wfg},bg=${wbg}]${wr_sep}"
     tmux set-window-option -g window-status-format \                                       
       "#[fg=${bg_alt},bg=${wbg}]${wl_sep}#[bg=${bg_alt}]${flags}#[fg=${white}]${spacer}#I  #W${spacer}#[fg=${bg_alt},bg=${wbg}]${wr_sep}"
@@ -269,6 +270,7 @@ window_list() {
   if $icons_only; then
     tmux set-window-option -g window-status-current-format "#[fg=${wbg},bg=${wfg}]${spacer}#I  #W${spacer}"
     tmux set-window-option -g window-status-format "#[fg=${white},bg=${wfg}]${spacer}#I  #W${spacer}"
+
   fi
 }
 
